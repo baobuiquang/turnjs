@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurnJS</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <!-- Flipbook -->
+    <div id="flipbook-wrap">
+        <div id="flipbook">
+            <div class="pg">
+                <div class="content">Page 001</div>
+            </div>
+            <div class="pg">
+                <div class="content">Page 002</div>
+            </div>
+            <div class="pg">
+                <div class="content">
+                    Page 003
+                    <br>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum laoreet, quam at volutpat
+                    semper, ex nibh euismod urna, id varius quam neque sit amet augue. Duis ut metus nec magna luctus
+                    dignissim vitae at ligula. Praesent molestie nunc id tempus posuere. Aenean eu purus in purus
+                    imperdiet dapibus vitae vel felis. Donec varius iaculis faucibus. Nulla orci libero, auctor ut
+                    luctus interdum, faucibus sed erat. Sed vestibulum libero nec tortor convallis, ac euismod velit
+                    luctus. Proin congue, justo id semper bibendum, felis tortor pharetra ipsum, in feugiat mi tellus
+                    vitae sapien. Fusce placerat odio et libero iaculis viverra. Nulla facilisi. Vivamus finibus lorem
+                    tellus, eget laoreet nisi tincidunt ac. Donec lobortis hendrerit turpis eget efficitur. Aenean
+                    auctor a leo sed porta.
+                    <br>
+                    In molestie mauris eget sem faucibus posuere. Vestibulum ante ipsum primis in faucibus orci luctus
+                    et ultrices posuere cubilia curae; Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+                    tristique sed libero et vehicula. Nulla facilisi. Etiam ullamcorper enim eget lorem ullamcorper,
+                    mollis porttitor felis tincidunt. Integer eu tempus diam, vitae gravida dui. Aliquam sit amet
+                    accumsan orci, sed laoreet mauris. Nullam facilisis neque a ex aliquet, vel accumsan neque
+                    scelerisque. Ut viverra non diam at consectetur.
+                    <br>
+                    Aliquam erat volutpat. Nulla eget nulla a libero iaculis mollis ut in metus. Praesent convallis
+                    fermentum diam. Duis pulvinar non velit eget tincidunt. Sed quis nulla efficitur, gravida quam in,
+                    elementum felis. Nam tincidunt efficitur euismod. Phasellus sit amet risus id odio consectetur
+                    lacinia sit amet nec nulla. Sed dictum massa a lorem bibendum, accumsan ultricies tellus porta. Nunc
+                    consectetur metus et suscipit fermentum. Quisque lobortis sapien sit amet justo luctus, accumsan
+                    dapibus ipsum accumsan. Pellentesque molestie gravida tortor ac placerat. Interdum et malesuada
+                    fames ac ante ipsum primis in faucibus. Suspendisse potenti.
+                    <br>
+                    Etiam semper mauris dui. Donec feugiat dolor sed lobortis commodo. Fusce in metus a tellus aliquam
+                    rhoncus. Integer elementum, nulla at rhoncus lacinia, orci elit pretium metus, a condimentum enim
+                    libero a ligula. Ut suscipit leo a vehicula ultrices. Duis imperdiet erat eget ipsum tempus aliquet
+                    ut et elit. Nulla in dui blandit, dictum mi vel, maximus turpis.
+                    <br>
+                    Donec placerat egestas nibh, ut placerat lorem rhoncus malesuada. Sed imperdiet pellentesque enim, a
+                    semper velit placerat vitae. In quis varius mauris. Donec rutrum pretium tortor, a efficitur dui
+                    posuere sed. Praesent id lorem nisi. Ut feugiat orci augue, id ornare ex cursus ac. Sed eleifend
+                    magna metus, sed sollicitudin tortor molestie sit amet. Suspendisse potenti. Etiam pretium odio eget
+                    faucibus porta. Suspendisse et gravida felis, at vestibulum arcu. Nullam non ante at tellus pulvinar
+                    tempor et sed purus. Praesent aliquam iaculis nisl vitae pharetra. In vulputate justo et dignissim
+                    auctor. Mauris augue lorem, lacinia non scelerisque sit amet, feugiat non libero. Aenean at eleifend
+                    mi, vitae dignissim odio.
+                </div>
+            </div>
+            <div class="pg">
+                <div class="content">Page 004</div>
+            </div>
+            <div class="pg">
+                <div class="content">Page 005</div>
+            </div>
+            <div class="pg">
+                <div class="content">Page 006</div>
+            </div>
+            <div class="pg">
+                <div class="content">Page 007</div>
+            </div>
+            <div class="pg">
+                <div class="content">Page 008</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Just an extra display for timer -->
+    <style>
+        #timer-display {
+            position: fixed;
+            font-size: 1rem;
+            bottom: 0.8rem;
+            right: 1rem;
+            color: black;
+        }
+    </style>
+    <div id="timer-display"></div>
+
+    <!-- JS Libraries -->
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/turn.min.js"></script>
+    <!-- JS Scripts -->
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#flipbook").turn({
+                width: 500,
+                height: 400,
+                // autoCenter: true,
+                // gradients: false,
+                // display: "single",
+                // page: 2,
+            });
+        });
+    </script>
+    <script>
+        // Auto turning page
+        function turningPage() {
+            if ($('#flipbook').turn('page') == $('#flipbook').turn('pages')) {
+                $('#flipbook').turn('page', 1);
+            } else {
+                $('#flipbook').turn('next');
+            }
+        }
+        let IDLETIMETOTURNPAGE = 10000; // 1000 ~ 1 second
+        let startTime = Date.now();
+        let timer;
+        function resetTimer() {
+            clearTimeout(timer);
+            startTime = Date.now();
+            timer = setTimeout(() => {
+                turningPage();
+                // console.log("Page turned");
+                resetTimer();
+            }, IDLETIMETOTURNPAGE);
+            // console.log("Timer reseted");
+        }
+        resetTimer();
+        document.body.addEventListener("click", function () {
+            // console.log("Body clicked");
+            resetTimer();
+        });
+
+        // Just for display the timer
+        function updateTimerDisplay() {
+            time_remained = Math.round((IDLETIMETOTURNPAGE - (Date.now() - startTime)) / 1000);
+            document.getElementById('timer-display').textContent = `${time_remained} / ${Math.round(IDLETIMETOTURNPAGE / 1000)}`;
+        }
+        updateTimerDisplay();
+        setInterval(updateTimerDisplay, 10);
+    </script>
+</body>
+
+</html>

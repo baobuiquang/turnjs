@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurnJS</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div id="flipbook-wrap">
+        <div id="flipbook">
+            <div class="pg"> Page 001 </div>
+            <div class="pg"> Page 002 </div>
+            <div class="pg"> Page 003 </div>
+            <div class="pg"> Page 004 </div>
+            <div class="pg"> Page 005 </div>
+            <div class="pg"> Page 006 </div>
+            <div class="pg"> Page 007 </div>
+            <div class="pg"> Page 008 </div>
+        </div>
+    </div>
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/turn.min.js"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#flipbook").turn({
+                width: 400,
+                height: 300,
+                // autoCenter: true,
+            });
+        });
+    </script>
+</body>
+
+</html>
